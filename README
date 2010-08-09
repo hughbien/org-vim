@@ -1,0 +1,14 @@
+SUMMARY
+
+org-vim is a outliner/organization tool plugin for vim.
+
+INSTALLATION
+
+Put org-script.vim => ~/.vim/scripts/org.vim and org-syntax.vim => 
+~/.vim/syntax/org.vim
+
+And then put this in your .vimrc file:
+
+  au Filetype org source ~/.vim/scripts/org.vim
+
+That's it!
