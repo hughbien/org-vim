@@ -1,30 +1,43 @@
 " Set filetype
 au BufRead,BufNewFile *.org set filetype=org
 
-" TODO should work with multi-line lists/outlines, should auto-fix numbered lists
+" TODO should auto-fix numbered lists
 function OrgAutoPrefixLine()
   let row = getpos(".")[1]
   let line = getline(row)
-  let task = match(line, "\[")
-  let dash = match(line, "\-")
-  let asterik = match(line, "\*")
-  let hash = matchstr(line, "^#*")
-  let num = matchstr(line, "^[0-9]*")
-  if task > -1
+  let i = row
+  while i > 0
+        \ && match(line, "^\\s*\\[.\\]") == -1 
+        \ && match(line, "^\\s*\-") == -1 
+        \ && match(line, "^\\s*\\*") == -1 
+        \ && match(line, "^\\s*\-") == -1 
+        \ && match(line, "^#") == -1 
+        \ && match(line, "^\\s*[0-9]\\.\\+") == -1 
+        \ && match(line, "^\\s*$") == -1
+    let i = i - 1
+    let line = getline(i)
+  endwhile
+  if match(line, "^\\s*\\[.\\]") != -1
+    let task = match(line, "\[")
     let failed = append(row, repeat(" ", task) . "[ ] ")
     let failed = cursor(row + 1, task + 4)
-  elseif dash > -1
+  elseif match(line, "^\\s*\-") != -1
+    let dash = match(line, "\-")
     let failed = append(row, repeat(" ", dash) . "- ")
     let failed = cursor(row + 1, dash + 2)
-  elseif asterik > -1
+  elseif match(line, "^\\s*\\*") != -1
+    let asterik = match(line, "\\*")
     let failed = append(row, repeat(" ", asterik) . "* ")
     let failed = cursor(row + 1, asterik + 2)
-  elseif strlen(hash) > 0
+  elseif match(line, "^#") != -1
+    let hash = matchstr(line, "^#*")
     let failed = append(row, hash . " ")
     let failed = cursor(row + 1, strlen(hash) + 1)
-  elseif strlen(num) > 0
-    let failed = append(row, (num + 1) . ". ")
-    let failed = cursor(row + 1, strlen(num) + 2)
+  elseif match(line, "^\\s*[0-9]\\.\\+") != -1
+    let num = matchstr(split(line)[0], "[0-9]*")
+    let spaces = match(line, "[0-9]")
+    let failed = append(row, repeat(" ", spaces) . (num + 1) . ". ")
+    let failed = cursor(row + 1, spaces + strlen(num) + 2)
   endif
   echo ""
 endfunction
@@ -42,13 +55,23 @@ function OrgToggleTask()
   echo ""
 endfunction
 
-" TODO make it work
+" TODO auto-fix ordered lists
+function OrgFixOrderedList()
+endfunction
+
+" TODO auto-fix tables
 function OrgFixTable()
 endfunction
 
-" TODO make it work
+" TODO fold levels on hashes
 function OrgFoldLevel()
 endfunction
+
+" TODO wiki links
+" TODO normal links
+" TODO buffer page list @maybe
+" TODO language recognition w/o file extension
+" TODO right-align tags
 
 " Shortcuts
 imap <C-O><C-O> <ESC>:call OrgAutoPrefixLine()<CR>a
