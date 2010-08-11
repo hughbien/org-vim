@@ -14,6 +14,7 @@ function OrgAutoPrefixLine()
         \ && match(line, "^#") == -1 
         \ && match(line, "^\\s*[0-9]\\.\\+") == -1 
         \ && match(line, "^\\s*$") == -1
+        \ && match(line, "^[^\s]") == -1
     let i = i - 1
     let line = getline(i)
   endwhile
@@ -69,13 +70,12 @@ endfunction
 
 " TODO wiki links
 " TODO normal links
-" TODO buffer page list @maybe
-" TODO language recognition w/o file extension
-" TODO right-align tags
 
 " Shortcuts
-imap <C-O><C-O> <ESC>:call OrgAutoPrefixLine()<CR>a
-imap <C-O><C-X> <ESC>:call OrgToggleTask()<CR>a
-
+nmap q= o<ESC>80i=<ESC>0
+nmap qn /^#<CR>:echo<CR>
+nmap qN ?^#<CR>:echo<CR>
+nmap qs /^=\+$<CR>:echo<CR>
+nmap qS ?^=\+$<CR>:echo<CR>
 nmap qo :call OrgAutoPrefixLine()<CR>
 nmap qx :call OrgToggleTask()<CR>

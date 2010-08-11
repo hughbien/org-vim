@@ -18,6 +18,7 @@ syn match orgTableBorder     "^\s*+-\(-\|+\)*"
 syn match orgTableCell       "|"
 syn match orgListItem        "^\s*\(-\|*\)"
 syn match orgNumListItem     "^\s*[0-9]\+\."
+syn match orgSeparator       "^=\+$"
 
 hi def link orgTag           Constant
 hi def link orgHighlight     Error
@@ -33,3 +34,4 @@ hi def link orgTableBorder   Label
 hi def link orgTableCell     Label
 hi def link orgListItem      Label
 hi def link orgNumListItem   Label
+hi def link orgSeparator     Ignore
