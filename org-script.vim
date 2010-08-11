@@ -1,6 +1,3 @@
-" Set filetype
-au BufRead,BufNewFile *.org set filetype=org
-
 " TODO should auto-fix numbered lists
 function OrgAutoPrefixLine()
   let row = getpos(".")[1]
@@ -64,8 +61,28 @@ endfunction
 function OrgFixTable()
 endfunction
 
-" TODO fold levels on hashes
-function OrgFoldLevel()
+function OrgFoldLevel(lnum)
+  let line = getline(a:lnum)
+  if line =~ "^#[^#]"
+    return '>1'
+  elseif line =~ "^\\s*$"
+    return '0'
+  else
+    return '1'
+  endif
+endfunction
+
+function OrgFoldText()
+  return getline(v:foldstart)
+endfunction
+
+function OrgFold()
+  set foldenable
+  set foldmethod=expr
+  set foldexpr=OrgFoldLevel(v:lnum)
+  set foldtext=OrgFoldText()
+  set foldlevel=0
+  echo ""
 endfunction
 
 " TODO wiki links
@@ -79,3 +96,5 @@ nmap qs /^=\+$<CR>:echo<CR>
 nmap qS ?^=\+$<CR>:echo<CR>
 nmap qo :call OrgAutoPrefixLine()<CR>
 nmap qx :call OrgToggleTask()<CR>
+nmap qz :call OrgFold()<CR>
+
