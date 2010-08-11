@@ -61,12 +61,13 @@ endfunction
 function OrgFixTable()
 endfunction
 
+" TODO handle multiple levels of folds
 function OrgFoldLevel(lnum)
   let line = getline(a:lnum)
-  if line =~ "^#[^#]"
-    return '>1'
-  elseif line =~ "^\\s*$"
+  if line =~ "^\=\+$"
     return '0'
+  elseif line =~ "^#[^#]"
+    return '>1'
   else
     return '1'
   endif
