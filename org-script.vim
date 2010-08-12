@@ -61,15 +61,20 @@ endfunction
 function OrgFixTable()
 endfunction
 
-" TODO handle multiple levels of folds
 function OrgFoldLevel(lnum)
   let line = getline(a:lnum)
-  if line =~ "^\=\+$"
-    return '0'
-  elseif line =~ "^#[^#]"
-    return '>1'
+  if line =~ "^#"
+    return '>' . strlen(matchstr(line, "^#*"))
   else
-    return '1'
+    let i = a:lnum
+    while i > 0
+      let line = getline(i)
+      if line =~ "^#"
+        return strlen(matchstr(line, "^#*"))
+      endif
+      let i = i - 1
+    endwhile
+    return '0'
   endif
 endfunction
 
@@ -85,9 +90,6 @@ function OrgFold()
   set foldlevel=0
   echo ""
 endfunction
-
-" TODO wiki links
-" TODO normal links
 
 " Shortcuts
 nmap q= o<ESC>80i=<ESC>0
