@@ -1,6 +1,6 @@
 " TODO should auto-fix numbered lists
 function OrgAutoPrefixLine()
-  let row = getpos(".")[1]
+  let row = line(".")
   let line = getline(row)
   let i = row
   while i > 0
@@ -41,7 +41,7 @@ function OrgAutoPrefixLine()
 endfunction
 
 function OrgToggleTask()
-  let row = getpos(".")[1]
+  let row = line(".")
   let line = getline(row)
   let task = match(line, "\\[ \\]")
   let done = match(line, "\\[x\\]")
