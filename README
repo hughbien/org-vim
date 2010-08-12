@@ -1,14 +1,122 @@
-SUMMARY
+# Summary
 
-org-vim is a outliner/organization tool plugin for vim.
+org-vim is a outliner/organization plugin for vim.  It provides syntax
+highlighting and some keyboard shortcuts for common operations.
 
-INSTALLATION
+================================================================================
+# Install
 
-Put org-script.vim => ~/.vim/scripts/org.vim and org-syntax.vim => 
-~/.vim/syntax/org.vim
+1. cp org-script.vim ~/.vim/scripts/org.vim
+2. cp org-syntax.vim ~/.vim/syntax/org.vim
+3. Append to `.vimrc` file:
 
-And then put this in your .vimrc file:
+   " activates org-vim on *.org files
+   au BufRead,BufNewFile *.org set filetype=org
+   au Filetype org source ~/.vim/scripts/org.vim
 
-  au Filetype org source ~/.vim/scripts/org.vim
+Files with an extension of .org will automatically get syntax highlighting and
+some keyboard shortcuts in normal mode.  If the file you're editing doesn't have
+the .org extension, you can set the filetype manually.
 
-That's it!
+    :set filetype=org
+
+================================================================================
+# Syntax
+
+## Outlines
+
+Outlines are done with hashes (#) at the beginning of the line.  Each hash
+represents a new level.
+
+Example:
+    # Level 1
+    ## Level 2
+    Text in "Level 2" does not require any sort of indentation.
+    ## Level 2b
+    Additional text in level 2b.
+
+## Lists
+
+Lists start the line with a number followed by a period (1.), a dash (-),
+or an asterik (*).  These items may be preceded with any amount of whitespace.
+
+Examples:
+    1. First item
+    2. Second item
+       Text can be wrapped around
+    3. Third item
+
+    - Unordered list item
+    - Unordered list item again
+
+    * Asteriks may also be used
+    * For unordered list items
+
+## Todo lists
+
+Todos start with square brackes with a space between them ([ ]).  To mark
+an item as done, replace the space with an 'x' ([x]).
+
+Examples:
+    [ ] Unfinished item
+    [ ] Unfinished item #2
+    [x] Finished item
+
+## Tables
+
+Table borders are done via pluses and dashes (+----+----+).  Columns are
+separated using vertical bars (|).
+
+Example:
+    +-----+-------+-------+
+    | Fox | Quick | Brown |
+    +-----+-------+-------+
+    | Dog | Lazy  | Green |
+    +-----+-------+-------+
+
+## Tags
+
+Tags are any words prefixed with an at-sign (@).  They are not required to be
+at the beginning of a line.
+
+Examples:
+    @maybe
+    Tags can follow paragraphs. @tag
+
+## Highlights
+
+Highlighting text is done via mustaches ({{ }}).
+
+Example:
+    Normal text followed by {{ highlighted text }}.
+
+## Separators
+
+Separators are done via repeat equal signs (=).  All characters on the line must
+be an equal sign, no whitespace is allowed.
+
+Example:
+================================================================================
+
+# Shortcuts in normal mode
+
++-----+----------------------------------------------------+
+| Key | Action                                             |
++-----+----------------------------------------------------+
+| q=  | Inserts a separator                                |
++-----+----------------------------------------------------+
+| qn  | Moves cursor to next outline header                |
++-----+----------------------------------------------------+
+| qN  | Moves cursor to previous outline header            |
++-----+----------------------------------------------------+
+| qs  | Moves cursor to next separator                     |
++-----+----------------------------------------------------+
+| qS  | Moves cursor to previous separator                 |
++-----+----------------------------------------------------+
+| qo  | Appends a new list line to any list                |
++-----+----------------------------------------------------+
+| qx  | Toggles the current todo item                      |
++-----+----------------------------------------------------+
+| qz  | Folds the current file according to its outline    |
++-----+----------------------------------------------------+
+
