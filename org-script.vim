@@ -11,7 +11,6 @@ function OrgAutoPrefixLine()
         \ && match(line, "^#") == -1 
         \ && match(line, "^\\s*[0-9]\\.\\+") == -1 
         \ && match(line, "^\\s*$") == -1
-        \ && match(line, "^[^\s]") == -1
     let i = i - 1
     let line = getline(i)
   endwhile
