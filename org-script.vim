@@ -5,35 +5,35 @@ function OrgAutoPrefixLine()
   let line = getline(row)
   let i = row
   while i > 0
-        \ && match(line, "^\\s*\\[.\\]") == -1 
-        \ && match(line, "^\\s*\-") == -1 
-        \ && match(line, "^\\s*\\*") == -1 
-        \ && match(line, "^\\s*\-") == -1 
-        \ && match(line, "^#") == -1 
-        \ && match(line, "^\\s*[0-9]\\.\\+") == -1 
-        \ && match(line, "^\\s*$") == -1
+        \ && line !~ "^\\s*\\[.\\]" 
+        \ && line !~ "^\\s*\-" 
+        \ && line !~ "^\\s*\\*" 
+        \ && line !~ "^\\s*\-" 
+        \ && line !~ "^#" 
+        \ && line !~ "^\\s*[0-9]\\.\\+" 
+        \ && line !~ "^\\s*$"
     let i = i - 1
     let line = getline(i)
   endwhile
-  if match(line, "^\\s*\\[.\\]") != -1
+  if line =~ "^\\s*\\[.\\]"
     let task = match(line, "\[")
     call append(row, repeat(" ", task) . "[ ] ")
     call cursor(row + 1, task + 4)
-  elseif match(line, "^\\s*\-") != -1
+  elseif line =~ "^\\s*\-"
     let dash = match(line, "\-")
     call append(row, repeat(" ", dash) . "- ")
     call cursor(row + 1, dash + 2)
-  elseif match(line, "^\\s*\\*") != -1
+  elseif line =~ "^\\s*\\*"
     let asterik = match(line, "\\*")
     call append(row, repeat(" ", asterik) . "* ")
     call cursor(row + 1, asterik + 2)
-  elseif match(line, "^#") != -1
+  elseif line =~ "^#"
     let hash = matchstr(line, "^#*")
     call append(row, hash . " ")
     call cursor(row + 1, strlen(hash) + 1)
-  elseif match(line, "^\\s*[0-9]\\.\\+") != -1
+  elseif line =~ "^\\s*[0-9]\\.\\+"
     let num = matchstr(split(line)[0], "[0-9]*")
-    let spaces = match(line, "[0-9]")
+    let spaces = line !~ "[0-9]"
     call append(row, repeat(" ", spaces) . (num + 1) . ". ")
     call cursor(row + 1, spaces + strlen(num) + 2)
   endif
@@ -43,11 +43,9 @@ function OrgToggleTask()
   echo ""
   let row = line(".")
   let line = getline(row)
-  let task = match(line, "\\[ \\]")
-  let done = match(line, "\\[x\\]")
-  if task > -1
+  if line =~ "\\[ \\]"
     call setline(row, substitute(line, "\\[ \\]", "[x]", ""))
-  elseif done > -1
+  elseif line =~ "\\[x\\]"
     call setline(row, substitute(line, "\\[x\\]", "[ ]", ""))
   endif
 endfunction
@@ -59,14 +57,14 @@ endfunction
 function OrgFixTable()
   echo ""
   let ltop = line(".")
-  while match(getline(ltop), "^\\s*\+\[\+\-\]*$") != -1 || 
-      \ match(getline(ltop), "^\\s*\|") != -1
+  while getline(ltop) =~ "^\\s*\+\[\+\-\]*$" || 
+      \ getline(ltop) =~ "^\\s*\|"
     let ltop = ltop - 1
   endwhile
 
   let lbot = line(".")
-  while match(getline(lbot), "^\\s*\+\[\+\-\]*$") != -1 || 
-      \ match(getline(lbot), "^\\s*\|") != -1
+  while getline(lbot) =~ "^\\s*\+\[\+\-\]*$" || 
+      \ getline(lbot) =~ "^\\s*\|"
     let lbot = lbot + 1
   endwhile
 
