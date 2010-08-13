@@ -1,11 +1,8 @@
 # Summary
-
 org-vim is a outliner/organization plugin for vim.  It provides syntax
 highlighting and some keyboard shortcuts for common operations.
 
-================================================================================
 # Install
-
 1. cp org-script.vim ~/.vim/scripts/org.vim
 2. cp org-syntax.vim ~/.vim/syntax/org.vim
 3. Append to `.vimrc` file:
@@ -20,11 +17,8 @@ the .org extension, you can set the filetype manually.
 
     :set filetype=org
 
-================================================================================
 # Syntax
-
 ## Outlines
-
 Outlines are done with hashes (#) at the beginning of the line.  Each hash
 represents a new level.
 
@@ -36,7 +30,6 @@ Example:
     Additional text in level 2b.
 
 ## Lists
-
 Lists start the line with a number followed by a period (1.), a dash (-),
 or an asterik (*).  These items may be preceded with any amount of whitespace.
 
@@ -53,7 +46,6 @@ Examples:
     * For unordered list items
 
 ## Todo lists
-
 Todos start with square brackes with a space between them ([ ]).  To mark
 an item as done, replace the space with an 'x' ([x]).
 
@@ -63,7 +55,6 @@ Examples:
     [x] Finished item
 
 ## Tables
-
 Table borders are done via pluses and dashes (+----+----+).  Columns are
 separated using vertical bars (|).
 
@@ -75,7 +66,6 @@ Example:
     +-----+-------+-------+
 
 ## Tags
-
 Tags are any words prefixed with an at-sign (@).  They are not required to be
 at the beginning of a line.
 
@@ -84,14 +74,12 @@ Examples:
     Tags can follow paragraphs. @tag
 
 ## Highlights
-
 Highlighting text is done via mustaches ({{ }}).
 
 Example:
     Normal text followed by {{ highlighted text }}.
 
 ## Separators
-
 Separators are done via repeat equal signs (=).  All characters on the line must
 be an equal sign, no whitespace is allowed.
 
@@ -99,7 +87,6 @@ Example:
 ================================================================================
 
 # Shortcuts in normal mode
-
 +-----+------------------------------------------------------+
 | Key | Action                                               |
 +-----+------------------------------------------------------+
