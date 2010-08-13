@@ -1,5 +1,6 @@
 " TODO should auto-fix numbered lists
 function OrgAutoPrefixLine()
+  echo ""
   let row = line(".")
   let line = getline(row)
   let i = row
@@ -16,40 +17,39 @@ function OrgAutoPrefixLine()
   endwhile
   if match(line, "^\\s*\\[.\\]") != -1
     let task = match(line, "\[")
-    let failed = append(row, repeat(" ", task) . "[ ] ")
-    let failed = cursor(row + 1, task + 4)
+    call append(row, repeat(" ", task) . "[ ] ")
+    call cursor(row + 1, task + 4)
   elseif match(line, "^\\s*\-") != -1
     let dash = match(line, "\-")
-    let failed = append(row, repeat(" ", dash) . "- ")
-    let failed = cursor(row + 1, dash + 2)
+    call append(row, repeat(" ", dash) . "- ")
+    call cursor(row + 1, dash + 2)
   elseif match(line, "^\\s*\\*") != -1
     let asterik = match(line, "\\*")
-    let failed = append(row, repeat(" ", asterik) . "* ")
-    let failed = cursor(row + 1, asterik + 2)
+    call append(row, repeat(" ", asterik) . "* ")
+    call cursor(row + 1, asterik + 2)
   elseif match(line, "^#") != -1
     let hash = matchstr(line, "^#*")
-    let failed = append(row, hash . " ")
-    let failed = cursor(row + 1, strlen(hash) + 1)
+    call append(row, hash . " ")
+    call cursor(row + 1, strlen(hash) + 1)
   elseif match(line, "^\\s*[0-9]\\.\\+") != -1
     let num = matchstr(split(line)[0], "[0-9]*")
     let spaces = match(line, "[0-9]")
-    let failed = append(row, repeat(" ", spaces) . (num + 1) . ". ")
-    let failed = cursor(row + 1, spaces + strlen(num) + 2)
+    call append(row, repeat(" ", spaces) . (num + 1) . ". ")
+    call cursor(row + 1, spaces + strlen(num) + 2)
   endif
-  echo ""
 endfunction
 
 function OrgToggleTask()
+  echo ""
   let row = line(".")
   let line = getline(row)
   let task = match(line, "\\[ \\]")
   let done = match(line, "\\[x\\]")
   if task > -1
-    let failed = setline(row, substitute(line, "\\[ \\]", "[x]", ""))
+    call setline(row, substitute(line, "\\[ \\]", "[x]", ""))
   elseif done > -1
-    let failed = setline(row, substitute(line, "\\[x\\]", "[ ]", ""))
+    call setline(row, substitute(line, "\\[x\\]", "[ ]", ""))
   endif
-  echo ""
 endfunction
 
 " TODO auto-fix ordered lists
@@ -57,6 +57,7 @@ function OrgFixOrderedList()
 endfunction
 
 function OrgFixTable()
+  echo ""
   let ltop = line(".")
   while match(getline(ltop), "^\\s*\+\[\+\-\]*$") != -1 || 
       \ match(getline(ltop), "^\\s*\|") != -1
@@ -143,12 +144,12 @@ function OrgFoldText()
 endfunction
 
 function OrgFold()
+  echo ""
   set foldenable
   set foldmethod=expr
   set foldexpr=OrgFoldLevel(v:lnum)
   set foldtext=OrgFoldText()
   set foldlevel=0
-  echo ""
 endfunction
 
 " Shortcuts
