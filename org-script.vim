@@ -1,4 +1,3 @@
-" TODO should auto-fix numbered lists
 function OrgAutoPrefixLine()
   echo ""
   let row = line(".")
@@ -10,7 +9,7 @@ function OrgAutoPrefixLine()
         \ && line !~ "^\\s*\\*" 
         \ && line !~ "^\\s*\-" 
         \ && line !~ "^#" 
-        \ && line !~ "^\\s*[0-9]\\.\\+" 
+        \ && line !~ "^\\s*[0-9]\\+\\." 
         \ && line !~ "^\\s*$"
     let i = i - 1
     let line = getline(i)
@@ -31,7 +30,7 @@ function OrgAutoPrefixLine()
     let hash = matchstr(line, "^#*")
     call append(row, hash . " ")
     call cursor(row + 1, strlen(hash) + 1)
-  elseif line =~ "^\\s*[0-9]\\.\\+"
+  elseif line =~ "^\\s*[0-9]\\+\\."
     let num = matchstr(split(line)[0], "[0-9]*")
     let spaces = line !~ "[0-9]"
     call append(row, repeat(" ", spaces) . (num + 1) . ". ")
@@ -50,8 +49,36 @@ function OrgToggleTask()
   endif
 endfunction
 
-" TODO auto-fix ordered lists
 function OrgFixOrderedList()
+  echo ""
+  let ltop = line(".")
+  while getline(ltop) =~ "^\\s*[0-9]\\+\\." || 
+      \ (getline(ltop) =~ "^\\s" && getline(ltop) !~ "^\\s*$")
+    let ltop = ltop - 1
+  endwhile
+
+  let lbot = line(".")
+  while getline(lbot) =~ "^\\s*[0-9]\\+\\." || 
+      \ (getline(lbot) =~ "^\\s" && getline(lbot) !~ "^\\s*$")
+    let lbot = lbot + 1
+  endwhile
+
+  let ltop = ltop + 1
+  let lbot = lbot - 1
+  if ltop > lbot
+    return
+  endif
+
+  let i = 1
+  let row = ltop
+  while row <= lbot
+    let line = getline(row)
+    if line =~ "^\\s*[0-9]\\+\\."
+      call setline(row, substitute(line, "[0-9]\\+", i, ""))
+      let i = i + 1
+    endif
+    let row = row + 1
+  endwhile
 endfunction
 
 function OrgFixTable()
@@ -152,6 +179,7 @@ endfunction
 
 " Shortcuts
 nmap q= o<ESC>80i=<ESC>0
+nmap ql :call OrgFixOrderedList()<CR>
 nmap qn /^#<CR>:echo<CR>
 nmap qN ?^#<CR>:echo<CR>
 nmap qs /^=\+$<CR>:echo<CR>
