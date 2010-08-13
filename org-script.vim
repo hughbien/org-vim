@@ -56,16 +56,15 @@ endfunction
 function OrgFixOrderedList()
 endfunction
 
-" TODO handle missing bars
 function OrgFixTable()
   let ltop = line(".")
-  while match(getline(ltop), "^\\s*\+\[\+\-\]") != -1 || 
+  while match(getline(ltop), "^\\s*\+\[\+\-\]*$") != -1 || 
       \ match(getline(ltop), "^\\s*\|") != -1
     let ltop = ltop - 1
   endwhile
 
   let lbot = line(".")
-  while match(getline(lbot), "^\\s*\+\[\+\-\]") != -1 || 
+  while match(getline(lbot), "^\\s*\+\[\+\-\]*$") != -1 || 
       \ match(getline(lbot), "^\\s*\|") != -1
     let lbot = lbot + 1
   endwhile
@@ -77,33 +76,43 @@ function OrgFixTable()
   endif
 
   let table = map(
-    \ filter(getline(ltop, lbot), "v:val !~ '^\\s*\+\[\+\-\]'"),
-    \ "split(v:val, '|')")
+    \ filter(getline(ltop, lbot), "v:val !~ '^\\s*\+\[\+\-\]*$'"),
+    \ "split(substitute(substitute(" .
+          \ "v:val, '^\\s\\+', '', ''), '\\s\\+$', '', ''), '|')")
   if len(table) == 0 || len(table[0]) == 0
     return
   endif
 
+  " Find maxlength of each column
   let maxlength = map(copy(table[0]), "len(v:val)")
   for row in table
     for i in range(len(row))
+      if i >= len(maxlength)
+        call add(maxlength, 0)
+      endif
       if len(row[i]) > maxlength[i]
         let maxlength[i] = len(row[i])
       endif
     endfor
   endfor
 
+  " Add whitespace to shorter cells, create whitespace cells as needed
   for row in table
-    for i in range(len(row))
+    for i in range(len(maxlength))
+      if i >= len(row)
+        call add(row, "")
+      endif
       if len(row[i]) < maxlength[i]
         let row[i] = row[i] . repeat(" ", maxlength[i] - len(row[i]))
       endif
     endfor
   endfor
 
+  " Regenerate the table
   let border = "+" . join(map(copy(maxlength), "repeat('-', v:val)"), "+") . "+"
   let i = ltop
   while i <= lbot
-    if getline(i) =~ "\\s*\+\[\+\-]"
+    if getline(i) =~ "^\\s*\+\[\+\-]*$"
       call setline(i, border)
     else
       call setline(i, "|" . join(remove(table, 0), "|") . "|")
