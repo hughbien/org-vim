@@ -56,8 +56,60 @@ endfunction
 function OrgFixOrderedList()
 endfunction
 
-" TODO auto-fix tables
+" TODO handle missing bars
 function OrgFixTable()
+  let ltop = line(".")
+  while match(getline(ltop), "^\\s*\+\[\+\-\]") != -1 || 
+      \ match(getline(ltop), "^\\s*\|") != -1
+    let ltop = ltop - 1
+  endwhile
+
+  let lbot = line(".")
+  while match(getline(lbot), "^\\s*\+\[\+\-\]") != -1 || 
+      \ match(getline(lbot), "^\\s*\|") != -1
+    let lbot = lbot + 1
+  endwhile
+
+  let ltop = ltop + 1
+  let lbot = lbot - 1
+  if ltop >= lbot
+    return
+  endif
+
+  let table = map(
+    \ filter(getline(ltop, lbot), "v:val !~ '^\\s*\+\[\+\-\]'"),
+    \ "split(v:val, '|')")
+  if len(table) == 0 || len(table[0]) == 0
+    return
+  endif
+
+  let maxlength = map(copy(table[0]), "len(v:val)")
+  for row in table
+    for i in range(len(row))
+      if len(row[i]) > maxlength[i]
+        let maxlength[i] = len(row[i])
+      endif
+    endfor
+  endfor
+
+  for row in table
+    for i in range(len(row))
+      if len(row[i]) < maxlength[i]
+        let row[i] = row[i] . repeat(" ", maxlength[i] - len(row[i]))
+      endif
+    endfor
+  endfor
+
+  let border = "+" . join(map(copy(maxlength), "repeat('-', v:val)"), "+") . "+"
+  let i = ltop
+  while i <= lbot
+    if getline(i) =~ "\\s*\+\[\+\-]"
+      call setline(i, border)
+    else
+      call setline(i, "|" . join(remove(table, 0), "|") . "|")
+    endif
+    let i = i + 1
+  endwhile
 endfunction
 
 function OrgFoldLevel(lnum)
@@ -96,6 +148,7 @@ nmap qn /^#<CR>:echo<CR>
 nmap qN ?^#<CR>:echo<CR>
 nmap qs /^=\+$<CR>:echo<CR>
 nmap qS ?^=\+$<CR>:echo<CR>
+nmap qt :call OrgFixTable()<CR>
 nmap qo :call OrgAutoPrefixLine()<CR>
 nmap qx :call OrgToggleTask()<CR>
 nmap qz :call OrgFold()<CR>
