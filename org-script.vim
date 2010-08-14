@@ -104,7 +104,7 @@ function OrgFixTable()
   let table = map(
     \ filter(getline(ltop, lbot), "v:val !~ '^\\s*\+\[\+\-\]*$'"),
     \ "split(substitute(substitute(" .
-          \ "v:val, '^\\s\\+', '', ''), '\\s\\+$', '', ''), '|')")
+          \ "v:val, '^\\s\\+', '', ''), '\\s\\+$', '', ''), '|', 1)")
   if len(table) == 0 || len(table[0]) == 0
     return
   endif
@@ -134,14 +134,18 @@ function OrgFixTable()
     endfor
   endfor
 
-  " Regenerate the table
-  let border = "+" . join(map(copy(maxlength), "repeat('-', v:val)"), "+") . "+"
+  " Regenerate the table, eliminate blank (0 length) columns as needed
+  let border = substitute(
+    \ "+" . join(map(copy(maxlength), "repeat('-', v:val)"), "+") . "+",
+    \ "++", "+", "g")
   let i = ltop
   while i <= lbot
     if getline(i) =~ "^\\s*\+\[\+\-]*$"
       call setline(i, border)
     else
-      call setline(i, "|" . join(remove(table, 0), "|") . "|")
+      call setline(i, substitute(
+        \ "|" . join(remove(table, 0), "|") . "|", 
+        \ "||", "|", "g"))
     endif
     let i = i + 1
   endwhile
