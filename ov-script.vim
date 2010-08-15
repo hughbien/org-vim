@@ -1,4 +1,4 @@
-function OrgAutoPrefixLine()
+function OvAutoPrefixLine()
   echo ""
   let row = line(".")
   let line = getline(row)
@@ -38,7 +38,7 @@ function OrgAutoPrefixLine()
   endif
 endfunction
 
-function OrgToggleTask()
+function OvToggleTask()
   echo ""
   let row = line(".")
   let line = getline(row)
@@ -49,7 +49,7 @@ function OrgToggleTask()
   endif
 endfunction
 
-function OrgFixOrderedList()
+function OvFixOrderedList()
   echo ""
   let ltop = line(".")
   while getline(ltop) =~ "^\\s*[0-9]\\+\\." || 
@@ -81,7 +81,7 @@ function OrgFixOrderedList()
   endwhile
 endfunction
 
-function OrgFixTable()
+function OvFixTable()
   echo ""
   let ltop = line(".")
   while getline(ltop) =~ "^\\s*\+\[\+\-\]*$" || 
@@ -151,7 +151,7 @@ function OrgFixTable()
   endwhile
 endfunction
 
-function OrgFoldLevel(lnum)
+function OvFoldLevel(lnum)
   let line = getline(a:lnum)
   if line =~ "^#"
     return '>' . strlen(matchstr(line, "^#*"))
@@ -168,28 +168,28 @@ function OrgFoldLevel(lnum)
   endif
 endfunction
 
-function OrgFoldText()
+function OvFoldText()
   return getline(v:foldstart)
 endfunction
 
-function OrgFold()
+function OvFold()
   echo ""
   set foldenable
   set foldmethod=expr
-  set foldexpr=OrgFoldLevel(v:lnum)
-  set foldtext=OrgFoldText()
+  set foldexpr=OvFoldLevel(v:lnum)
+  set foldtext=OvFoldText()
   set foldlevel=0
 endfunction
 
 " Shortcuts
 nmap q= o<ESC>80i=<ESC>0
-nmap ql :call OrgFixOrderedList()<CR>
+nmap ql :call OvFixOrderedList()<CR>
 nmap qn /^#<CR>:echo<CR>
 nmap qN ?^#<CR>:echo<CR>
 nmap qs /^=\+$<CR>:echo<CR>
 nmap qS ?^=\+$<CR>:echo<CR>
-nmap qt :call OrgFixTable()<CR>
-nmap qo :call OrgAutoPrefixLine()<CR>
-nmap qx :call OrgToggleTask()<CR>
-nmap qz :call OrgFold()<CR>
+nmap qt :call OvFixTable()<CR>
+nmap qo :call OvAutoPrefixLine()<CR>
+nmap qx :call OvToggleTask()<CR>
+nmap qz :call OvFold()<CR>
 

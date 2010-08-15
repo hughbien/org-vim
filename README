@@ -1,21 +1,22 @@
 # Summary
 org-vim is an outliner/organization plugin for vim.  It provides syntax
-highlighting and some keyboard shortcuts for common operations.
+highlighting and some keyboard shortcuts for common operations for the
+"ov" filetype.
 
 # Install
-1. cp org-script.vim ~/.vim/scripts/org.vim
-2. cp org-syntax.vim ~/.vim/syntax/org.vim
+1. cp ov-script.vim ~/.vim/scripts/ov.vim
+2. cp ov-syntax.vim ~/.vim/syntax/ov.vim
 3. Append to `.vimrc` file:
 
-   " activates org-vim on *.ov files
-   au BufRead,BufNewFile *.ov set filetype=org
-   au Filetype org source ~/.vim/scripts/org.vim
+   " activates on *.ov files
+   au BufRead,BufNewFile *.ov set filetype=ov
+   au Filetype ov source ~/.vim/scripts/ov.vim
 
-Files with an extension of .org will automatically get syntax highlighting and
+Files with an extension of .ov will automatically get syntax highlighting and
 some keyboard shortcuts in normal mode.  If the file you're editing doesn't have
-the .org extension, you can set the filetype manually.
+the .ov extension, you can set the filetype manually.
 
-    :set filetype=org
+    :set filetype=ov
 
 # Syntax
 ## Outlines
