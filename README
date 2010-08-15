@@ -7,8 +7,8 @@ highlighting and some keyboard shortcuts for common operations.
 2. cp org-syntax.vim ~/.vim/syntax/org.vim
 3. Append to `.vimrc` file:
 
-   " activates org-vim on *.org files
-   au BufRead,BufNewFile *.org set filetype=org
+   " activates org-vim on *.ov files
+   au BufRead,BufNewFile *.ov set filetype=org
    au Filetype org source ~/.vim/scripts/org.vim
 
 Files with an extension of .org will automatically get syntax highlighting and
