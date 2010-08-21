@@ -101,13 +101,24 @@ function OvFixTable()
     return
   endif
 
-  let table = map(
+  let rawTable = map(
     \ filter(getline(ltop, lbot), "v:val !~ '^\\s*\+\[\+\-\]*$'"),
     \ "split(substitute(substitute(" .
           \ "v:val, '^\\s\\+', '', ''), '\\s\\+$', '', ''), '|', 1)")
-  if len(table) == 0 || len(table[0]) == 0
+  if len(rawTable) == 0 || len(rawTable[0]) == 0
     return
   endif
+
+  " Trim cells to include only one space on both sides
+  let table = []
+  for rawRow in rawTable
+    let row = []
+    for cell in rawRow
+      call add(row, substitute(substitute(
+        \ cell, "^\\s\\+", " ", ""), "\\s\\+$", " ", ""))
+    endfor
+    call add(table, row)
+  endfor
 
   " Find maxlength of each column
   let maxlength = map(copy(table[0]), "len(v:val)")
