@@ -1,4 +1,4 @@
-function OvAutoPrefixLine()
+function! OvAutoPrefixLine()
   echo ""
   let row = line(".")
   let line = getline(row)
@@ -38,7 +38,7 @@ function OvAutoPrefixLine()
   endif
 endfunction
 
-function OvToggleTask()
+function! OvToggleTask()
   echo ""
   let row = line(".")
   let line = getline(row)
@@ -49,7 +49,7 @@ function OvToggleTask()
   endif
 endfunction
 
-function OvFixOrderedList()
+function! OvFixOrderedList()
   echo ""
   let ltop = line(".")
   while getline(ltop) =~ "^\\s*[0-9]\\+\\." || 
@@ -81,7 +81,7 @@ function OvFixOrderedList()
   endwhile
 endfunction
 
-function OvFixTable()
+function! OvFixTable()
   echo ""
   let ltop = line(".")
   while getline(ltop) =~ "^\\s*\+\[\+\-\]*$" || 
@@ -162,7 +162,7 @@ function OvFixTable()
   endwhile
 endfunction
 
-function OvFoldLevel(lnum)
+function! OvFoldLevel(lnum)
   let line = getline(a:lnum)
   if line =~ "^#"
     return '>' . strlen(matchstr(line, "^#*"))
@@ -179,11 +179,11 @@ function OvFoldLevel(lnum)
   endif
 endfunction
 
-function OvFoldText()
+function! OvFoldText()
   return getline(v:foldstart)
 endfunction
 
-function OvFold()
+function! OvFold()
   echo ""
   set foldenable
   set foldmethod=expr
