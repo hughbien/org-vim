@@ -193,14 +193,13 @@ function! OvFold()
 endfunction
 
 " Shortcuts
-nmap q= o<ESC>80i=<ESC>0
-nmap ql :call OvFixOrderedList()<CR>
-nmap qn /^#<CR>:echo<CR>
-nmap qN ?^#<CR>:echo<CR>
-nmap qs /^=\+$<CR>:echo<CR>
-nmap qS ?^=\+$<CR>:echo<CR>
-nmap qt :call OvFixTable()<CR>
-nmap qo :call OvAutoPrefixLine()<CR>
-nmap qx :call OvToggleTask()<CR>
-nmap qz :call OvFold()<CR>
-
+nmap <buffer> q= o<ESC>80i=<ESC>0
+nmap <buffer> ql :call OvFixOrderedList()<CR>
+nmap <buffer> qn /^#<CR>:echo<CR>
+nmap <buffer> qN ?^#<CR>:echo<CR>
+nmap <buffer> qs /^=\+$<CR>:echo<CR>
+nmap <buffer> qS ?^=\+$<CR>:echo<CR>
+nmap <buffer> qt :call OvFixTable()<CR>
+nmap <buffer> qo :call OvAutoPrefixLine()<CR>
+nmap <buffer> qx :call OvToggleTask()<CR>
+nmap <buffer> qz :call OvFold()<CR>
