@@ -8,7 +8,7 @@ highlighting and some keyboard shortcuts for common operations for the
 Install
 =======
 
-If you're using [pathogen https://github.com/tpope/vim-pathogen], drop this
+If you're using [pathogen](https://github.com/tpope/vim-pathogen), drop this
 project under `~/.vim/bundle`.  Otherwise, you'll need to copy some files:
 
     cp ftplugin/ov.vim ~/.vim/ftplugin/ov.vim
