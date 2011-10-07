@@ -8,14 +8,16 @@ highlighting and some keyboard shortcuts for common operations for the
 Install
 =======
 
-    cp ov-script.vim ~/.vim/scripts/ov.vim
-    cp ov-syntax.vim ~/.vim/syntax/ov.vim
+If you're using [pathogen https://github.com/tpope/vim-pathogen], drop this
+project under `~/.vim/bundle`.  Otherwise, you'll need to copy some files:
+
+    cp ftplugin/ov.vim ~/.vim/ftplugin/ov.vim
+    cp syntax/ov.vim ~/.vim/syntax/ov.vim
 
 Append to `.vimrc` file:
 
-    " activates on *.ov files
+    filetype plugin on  " if you don't already have it
     au BufRead,BufNewFile *.ov set filetype=ov
-    au Filetype ov source ~/.vim/scripts/ov.vim
 
 Files with an extension of .ov will automatically get syntax highlighting and
 some keyboard shortcuts in normal mode.  If the file you're editing doesn't have
