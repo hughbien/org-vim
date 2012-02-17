@@ -29,8 +29,8 @@ hi def link ovTitle4        Statement
 hi def link ovTitle5        Constant
 hi def link ovTask          Label
 hi def link ovTaskDone      Ignore
-hi def link ovTableBorder   Label
-hi def link ovTableCell     Label
-hi def link ovListItem      Label
-hi def link ovNumListItem   Label
+hi def link ovTableBorder   Statement
+hi def link ovTableCell     Statement
+hi def link ovListItem      Statement
+hi def link ovNumListItem   Statement
 hi def link ovSeparator     Ignore
