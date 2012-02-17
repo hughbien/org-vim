@@ -121,3 +121,9 @@ Shortcuts in normal mode
 * `qo` appends new list line to any list
 * `qx` toggles the current todo item
 * `qz` folds the current file according to its outline
+
+License
+=======
+
+Copyright 2012 Hugh Bien - http://hughbien.com.
+Released under BSD license, see LICENSE.md for more info.
