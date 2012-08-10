@@ -1,6 +1,9 @@
 " Language: ov
 " Maintainer: Hugh Bien (http://hughbien.com)
 
+if exists("b:current_syntax")
+  finish
+endif
 syntax clear
 
 syn match ovTag             "@[a-zA-Z0-9-_]\+"
@@ -34,3 +37,5 @@ hi def link ovTableCell     Statement
 hi def link ovListItem      Statement
 hi def link ovNumListItem   Statement
 hi def link ovSeparator     Ignore
+
+let b:current_syntax = "ov"
