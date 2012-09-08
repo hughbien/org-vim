@@ -11,8 +11,8 @@ Install
 If you're using [pathogen](https://github.com/tpope/vim-pathogen), drop this
 project under `~/.vim/bundle`.  Otherwise, you'll need to copy some files:
 
-    cp ftplugin/ov.vim ~/.vim/ftplugin/ov.vim
-    cp syntax/ov.vim ~/.vim/syntax/ov.vim
+    $ cp ftplugin/ov.vim ~/.vim/ftplugin/ov.vim
+    $ cp syntax/ov.vim ~/.vim/syntax/ov.vim
 
 Append to `.vimrc` file:
 
@@ -125,5 +125,5 @@ Shortcuts in normal mode
 License
 =======
 
-Copyright 2012 Hugh Bien - http://hughbien.com.
+Copyright Hugh Bien - http://hughbien.com.
 Released under BSD license, see LICENSE.md for more info.
